@@ -19,6 +19,13 @@ async function init() {
 }
 ```
 
+## Similar Packages
+ 
+ - [portfinder](https://www.npmjs.com/package/portfinder)
+ - [get-port](https://www.npmjs.com/package/get-port)
+ - [find-free-port](https://www.npmjs.com/package/find-free-port)
+ - [freeport](https://www.npmjs.com/package/freeport)
+
 ## License
 
 The MIT License
