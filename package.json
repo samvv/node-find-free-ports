@@ -1,0 +1,25 @@
+{
+  "name": "find-free-ports",
+  "version": "1.0.0",
+  "description": "Find multiple free ports on localhost",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OrionGroup/node-find-free-ports.git"
+  },
+  "keywords": [
+    "node",
+    "port",
+    "server",
+    "scanner"
+  ],
+  "author": "Sam Vervaeck",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/OrionGroup/node-find-free-ports/issues"
+  },
+  "homepage": "https://github.com/OrionGroup/node-find-free-ports#readme"
+}
