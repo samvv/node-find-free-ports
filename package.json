@@ -4,7 +4,8 @@
   "description": "Find multiple free ports on localhost",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "prepare": "tsc",
+    "test": "tsc && mocha"
   },
   "repository": {
     "type": "git",
