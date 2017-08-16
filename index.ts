@@ -23,21 +23,17 @@ async function findFreePorts(count: number = 1) {
 
   })());
 
-  console.log('her');
-
   return new Promise<number[]>((accept, reject) => {
 
     function tryAccept() {
       for (const server of servers)
         if (!server.closed)
           return;
-      console.log('here');
       accept(servers.map(s => s.port));     
     }
 
     for (const server of servers) {
       server.once('close', () => {
-        console.log('here');
         server.closed = true;
         tryAccept();
       });
