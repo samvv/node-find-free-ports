@@ -26,6 +26,7 @@
     "@types/node": "^8.0.22"
   },
   "devDependencies": {
-    "@types/mocha": "^2.2.41"
+    "@types/mocha": "^2.2.41",
+    "chai": "^4.1.1"
   }
 }
