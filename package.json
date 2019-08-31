@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prepare": "tsc",
-    "test": "tsc && mocha"
+    "test": "mocha --timeout 30000"
   },
   "repository": {
     "type": "git",
@@ -25,8 +25,11 @@
   "homepage": "https://github.com/OrionGroup/node-find-free-ports#readme",
   "devDependencies": {
     "@types/chai": "^4.2.0",
+    "@types/chai-as-promised": "^7.1.2",
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.7.3",
-    "chai": "^4.2.0"
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^6.2.0"
   }
 }
