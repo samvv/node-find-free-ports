@@ -1,44 +1,49 @@
 
-import { Server, createServer } from "net"
+import * as net from "net"
 
 type Assignable<T> = { [P in keyof T]: T[P] } & { [key: string]: any };
 
-async function findFreePorts(count: number = 1) {
-
-
-  const servers = await Promise.all((function () {
-
-    const servers = [];
-
-    for (let i = 0; i < count; ++i) {
-      servers.push(new Promise<Server>((accept, reject) => {
-        const server = createServer();
-        server.once('listening', () => accept(server));
-        server.once('error', reject);
-        server.listen();
-      }));
-    }
-    
-    return servers;
-
-  })());
+function findFreePorts(count: number = 1) {
 
   return new Promise<number[]>((accept, reject) => {
 
-    function tryAccept() {
-      for (const server of servers)
-        if (!server.closed)
-          return;
-      accept(servers.map(s => s.port));     
-    }
+    // contains tuples (server, isClosed, port)
+    const servers: [net.Server, boolean, number | undefined][] = [];
 
-    for (const server of servers) {
-      server.once('close', () => {
-        server.closed = true;
-        tryAccept();
-      });
-      server.port = server.address().port;
-      server.close();          
+    loop(0);
+
+    function loop(i: number) {
+
+      if (i < count) {
+
+          const server = net.createServer();
+          server.once('listening', () => { loop(i+1) });
+          server.once('error', reject);
+          server.listen();
+          servers.push([server, false, undefined]);
+
+      } else {
+
+        function tryAccept() {
+          for (const [closed, server] of servers) {
+            if (!closed) {
+              return;
+            }
+          }
+          accept(servers.map(s => s[2]));
+        }
+
+        for (const tuple of servers) {
+          const server = tuple[0];
+          server.once('close', () => {
+            tuple[1] = true;
+            tryAccept();
+          });
+          tuple[2] = (server.address() as net.AddressInfo).port;
+          server.close();          
+        }
+
+      }
     }
 
   });
