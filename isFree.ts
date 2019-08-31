@@ -1,21 +1,19 @@
 
-import { createServer } from "net"
+import * as net from "net"
 
-function isFree(port: number) {
-  return new Promise<boolean>((accept, reject) => {
-    const server = createServer();
-    server.once('error', (e: NodeJS.ErrnoException) => {
-      if (e.code === 'EADDRINUSE' || e.code === 'EACCES') {
-        accept(false);
+function isFree(port: number): Promise<boolean> {
+  return new Promise((accept, reject) => {
+    const sock = net.createConnection(port);
+    sock.once('connect', () => { sock.end() });
+    sock.once('close', () => { accept(false); })
+    sock.once('error', (e: NodeJS.ErrnoException) => {
+      sock.destroy();
+      if (e.code === 'ECONNREFUSED') {
+        accept(true)
       } else {
         reject(e);
       }
     });
-    server.once('listening', function () {
-      server.once('close', () => { accept(true); });
-      server.close();
-    });
-    server.listen(port);
   });
 }
 

@@ -1,8 +1,8 @@
 
-import findFreePorts = require('./index');
-import * as net from "net"
+import findFreePorts from './index';
+import isFree from "./isFree"
 import * as chai from "chai"
-import * as chaiAsPromised from "chai-as-promised"
+import chaiAsPromised from "chai-as-promised"
 
 chai.use(chaiAsPromised);
 
@@ -44,19 +44,4 @@ describe('a free port finder', () => {
 });
 
 
-function isFree(port: number): Promise<boolean> {
-  return new Promise((accept, reject) => {
-    const sock = net.createConnection(port);
-    sock.once('connect', () => { sock.end() });
-    sock.once('close', () => { accept(false); })
-    sock.once('error', (e: NodeJS.ErrnoException) => {
-      sock.destroy();
-      if (e.code === 'ECONNREFUSED') {
-        accept(true)
-      } else {
-        reject(e);
-      }
-    });
-  });
-}
 

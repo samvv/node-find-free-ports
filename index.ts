@@ -1,16 +1,15 @@
 
-import * as net from "net"
+import isFree from "./isFree"
 
 const MIN_PORT = 1025;
 const MAX_PORT = 65535;
+const DEFAULT_PARALLEL = 10;
 
 interface FindFreePortsOptions {
   startPort?: number;
   endPort?: number;
   maxParallell?: number;
 }
-
-const DEFAULT_PARALLEL = 10;
 
 async function findFreePorts(count: number = 1, opts: FindFreePortsOptions = {}): Promise<number[]> {
 
@@ -44,22 +43,6 @@ async function findFreePorts(count: number = 1, opts: FindFreePortsOptions = {})
     if (await isFree(port)) {
       ports.push(port);
     }
-  }
-
-  function isFree(port: number): Promise<boolean> {
-    return new Promise((accept, reject) => {
-      const sock = net.createConnection(port);
-      sock.once('connect', () => { sock.end() });
-      sock.once('close', () => { accept(false); })
-      sock.once('error', (e: NodeJS.ErrnoException) => {
-        sock.destroy();
-        if (e.code === 'ECONNREFUSED') {
-          accept(true)
-        } else {
-          reject(e);
-        }
-      });
-    });
   }
 
 }
