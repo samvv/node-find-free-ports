@@ -19,8 +19,27 @@ async function init() {
 }
 ```
 
+## Development
+
+We use [TypeScript](https://www.typescriptlang.org/) to check the code for human mistakes.
+
+```
+tsc --watch
+```
+
+You can run the tests with the following command:
+
+```
+npm test
+```
+
+⚠️ The tests may use a lot of resources so make sure your computer is up for the
+task. Also, due to race conditios with other applications that cannot be
+avoided, the tests may falsly fail or succeed in some cases. Be sure to
+double-check any changes you make.
+
 ## Similar Packages
- 
+
  - [portfinder](https://www.npmjs.com/package/portfinder)
  - [get-port](https://www.npmjs.com/package/get-port)
  - [find-free-port](https://www.npmjs.com/package/find-free-port)
