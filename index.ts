@@ -1,52 +1,66 @@
 
 import * as net from "net"
 
-type Assignable<T> = { [P in keyof T]: T[P] } & { [key: string]: any };
+const MIN_PORT = 1025;
+const MAX_PORT = 65535;
 
-function findFreePorts(count: number = 1) {
+interface FindFreePortsOptions {
+  startPort?: number;
+  endPort?: number;
+  maxParallell?: number;
+}
 
-  return new Promise<number[]>((accept, reject) => {
+const DEFAULT_PARALLEL = 10;
 
-    // contains tuples (server, isClosed, port)
-    const servers: [net.Server, boolean, number | undefined][] = [];
+async function findFreePorts(count: number = 1, opts: FindFreePortsOptions = {}): Promise<number[]> {
 
-    loop(0);
+  const startPort = opts.startPort !== undefined ? opts.startPort : MIN_PORT;
+  const endPort = opts.endPort !== undefined ? opts.endPort : MAX_PORT;
 
-    function loop(i: number) {
+  const parallel = Math.min(count, opts.maxParallell !== undefined ? opts.maxParallell : DEFAULT_PARALLEL);
 
-      if (i < count) {
+  const ports: number[] = [];
+  let port = startPort;
 
-          const server = net.createServer();
-          server.once('listening', () => { loop(i+1) });
-          server.once('error', reject);
-          server.listen();
-          servers.push([server, false, undefined]);
-
-      } else {
-
-        function tryAccept() {
-          for (const [closed, server] of servers) {
-            if (!closed) {
-              return;
-            }
-          }
-          accept(servers.map(s => s[2]));
+  return new Promise((accept, reject) => {
+    
+    for (let i = 0; i < parallel; i++) {
+      const next = () => {
+        if (ports.length === count) {
+          accept(ports);
+        } else if (count - ports.length > parallel || ports.length % parallel < i) {
+          test(port++).then(next).catch(reject);
         }
-
-        for (const tuple of servers) {
-          const server = tuple[0];
-          server.once('close', () => {
-            tuple[1] = true;
-            tryAccept();
-          });
-          tuple[2] = (server.address() as net.AddressInfo).port;
-          server.close();          
-        }
-
       }
+      test(port++).then(next).catch(reject)
     }
 
   });
+
+  async function test(port: number) {
+    if (port > endPort) {
+      throw new Error(`Could not find free ports: not enough free ports available.`);
+    }
+    if (await isFree(port)) {
+      ports.push(port);
+    }
+  }
+
+  function isFree(port: number): Promise<boolean> {
+    return new Promise((accept, reject) => {
+      const sock = net.createConnection(port);
+      sock.once('connect', () => { sock.end() });
+      sock.once('close', () => { accept(false); })
+      sock.once('error', (e: NodeJS.ErrnoException) => {
+        sock.destroy();
+        if (e.code === 'ECONNREFUSED') {
+          accept(true)
+        } else {
+          reject(e);
+        }
+      });
+    });
+  }
 
 }
 
