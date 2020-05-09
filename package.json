@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/OrionGroup/node-find-free-ports.git"
+    "url": "git+https://github.com/samvv/node-find-free-ports.git"
   },
   "keywords": [
     "node",
@@ -20,9 +20,9 @@
   "author": "Sam Vervaeck",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/OrionGroup/node-find-free-ports/issues"
+    "url": "https://github.com/samvv/node-find-free-ports/issues"
   },
-  "homepage": "https://github.com/OrionGroup/node-find-free-ports#readme",
+  "homepage": "https://github.com/samvv/node-find-free-ports#readme",
   "devDependencies": {
     "@types/chai": "^4.2.11",
     "@types/chai-as-promised": "^7.1.2",
