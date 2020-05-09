@@ -24,12 +24,12 @@
   },
   "homepage": "https://github.com/OrionGroup/node-find-free-ports#readme",
   "devDependencies": {
-    "@types/chai": "^4.2.0",
+    "@types/chai": "^4.2.11",
     "@types/chai-as-promised": "^7.1.2",
-    "@types/mocha": "^5.2.7",
-    "@types/node": "^12.7.3",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^13.13.5",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "mocha": "^6.2.0"
+    "mocha": "^7.1.2"
   }
 }
