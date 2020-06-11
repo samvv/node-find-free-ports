@@ -3,45 +3,52 @@ import isFree from "./isFree"
 
 const MIN_PORT = 1025;
 const MAX_PORT = 65535;
-const DEFAULT_PARALLEL = 10;
+const DEFAULT_JOB_COUNT = 10;
 
 interface FindFreePortsOptions {
   startPort?: number;
   endPort?: number;
-  maxParallell?: number;
+  jobCount?: number;
 }
 
-async function findFreePorts(count: number = 1, opts: FindFreePortsOptions = {}): Promise<number[]> {
+async function findFreePorts(count = 1, opts: FindFreePortsOptions = {}): Promise<number[]> {
 
-  const startPort = opts.startPort !== undefined ? opts.startPort : MIN_PORT;
-  const endPort = opts.endPort !== undefined ? opts.endPort : MAX_PORT;
+  const startPort = opts.startPort ?? MIN_PORT;
+  const endPort = opts.endPort ?? MAX_PORT;
+  const jobCount = Math.min(count, opts.jobCount ?? DEFAULT_JOB_COUNT);
 
-  const parallel = Math.min(count, opts.maxParallell !== undefined ? opts.maxParallell : DEFAULT_PARALLEL);
+  if (count > (endPort - startPort)) {
+    throw new Error(`Could not find free ports: the range of allowed ports is not large enough for the requested amount of ports to find.`);
+  }
+
+  const portInterval = Math.ceil((endPort - startPort) / jobCount);
 
   const ports: number[] = [];
-  let port = startPort;
+  const jobPromises: Array<Promise<void>> = [];
 
-  return new Promise((accept, reject) => {
-    
-    for (let i = 0; i < parallel; i++) {
-      const next = () => {
-        if (ports.length === count) {
-          accept(ports);
-        } else if (count - ports.length > parallel || ports.length % parallel < i) {
-          test(port++).then(next).catch(reject);
-        }
+  for (let i = 0; i < jobCount; i++) {
+    jobPromises.push(scanRange(startPort + portInterval * i, Math.min(endPort, startPort + portInterval * (i+1))));
+  }
+
+  await Promise.all(jobPromises);
+
+  if (ports.length < count) {
+    throw new Error(`Could not find free ports: there were not enough ports available.`);
+  }
+
+  return ports;
+
+  async function scanRange(startPort: number, endPort: number) {
+    for (let port = startPort; port < endPort; port++) {
+      if (ports.length >= count) {
+        break;
       }
-      test(port++).then(next).catch(reject)
-    }
-
-  });
-
-  async function test(port: number) {
-    if (port > endPort) {
-      throw new Error(`Could not find free ports: not enough free ports available.`);
-    }
-    if (await isFree(port)) {
-      ports.push(port);
+      if (await isFree(port)) {
+        if (ports.length >= count) {
+          break;
+        }
+        ports.push(port);
+      }
     }
   }
 
