@@ -4,10 +4,13 @@ const path = require("path");
 module.exports = {
   target: 'node',
   mode: 'production',
-  entry: './index.ts',
+  entry: {
+    index: './index.ts',
+    test: './test.ts',
+  },
   output: {
-    filename: 'index.js',
-    path: path.resolve(__dirname, 'build'),
+    filename: '[name].js',
+    path: path.resolve(__dirname),
   },
   resolve: {
     extensions: [".ts", ".js"],
