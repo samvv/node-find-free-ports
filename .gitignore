@@ -1,2 +1,8 @@
-*.js
+
 node_modules/
+
+# ignore all JavaScript files by default
+*.js
+
+# exceptions to the previous rule
+!webpack.config.js
