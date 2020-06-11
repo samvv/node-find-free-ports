@@ -1,15 +1,32 @@
 
 const path = require("path");
 
-module.exports = {
+module.exports = [{
   target: 'node',
   mode: 'production',
-  entry: {
-    index: './index.ts',
-    test: './test.ts',
-  },
+  entry: './src/index.ts',
   output: {
-    filename: '[name].js',
+    filename: 'index.js',
+    path: path.resolve(__dirname),
+    libraryTarget: 'commonjs2',
+    libraryExport: 'default',
+  },
+  resolve: {
+    extensions: [".ts", ".js"],
+  },
+  devtool: 'source-map',
+  module: {
+    rules: [
+      { test: /\.ts$/, loader: "ts-loader", options: { transpileOnly: true } },
+      { test: /\.m?js$/, exclude: /node_modules/, loader: 'babel-loader' },
+    ]
+  }
+}, {
+  target: 'node',
+  mode: 'production',
+  entry: './src/test.ts',
+  output: {
+    filename: 'test.js',
     path: path.resolve(__dirname),
   },
   resolve: {
@@ -22,5 +39,5 @@ module.exports = {
       { test: /\.m?js$/, exclude: /node_modules/, loader: 'babel-loader' },
     ]
   }
-};
+}];
 
