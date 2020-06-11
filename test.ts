@@ -1,44 +1,75 @@
 
-import findFreePorts from './index';
-import isFree from "./isFree"
+import * as os from "os"
+import * as net from "net"
 import * as chai from "chai"
 import chaiAsPromised from "chai-as-promised"
+
+import findFreePorts from './index';
+import isFree from "./isFree"
 
 chai.use(chaiAsPromised);
 
 const { expect, assert } = chai;
 
-const PORT_COUNT = 28;
+const PORT_COUNT = 1000;
 
-describe('a free port finder', () => {
+function isUnique<T>(array: T[]): boolean {
+  const set = new Set();
+  for (const element of array) {
+    if (set.has(element)) {
+      return false;
+    }
+    set.add(element);
+  }
+  return true;
+}
 
-  it('crashes properly when there are not enough free ports', async () => {
+describe('isFree()', () => {
+
+  it('detects when a port is in use', (done) => {
+    const server = net.createServer();
+    server.listen(undefined, async () => {
+      assert.isFalse(await isFree((server.address() as net.AddressInfo).port));
+      server.close();
+      done();
+    });
+  });
+
+  it('also detects when a port is free', (done) => {
+    const server = net.createServer();
+    server.listen(undefined, async () => {
+      const port = (server.address() as net.AddressInfo).port;
+      server.close(async () => {
+        assert.isTrue(await isFree(port));
+        done();
+      });
+    });
+  });
+
+});
+
+describe('findFreePorts()', () => {
+
+  it('crashes properly when there are not enough free ports within the given range', async () => {
     expect(findFreePorts(10, { startPort: 65530 })).to.eventually.be.rejectedWith(Error);
+    expect(findFreePorts(3, { startPort: 1024, endPort: 1026 })).to.eventually.be.rejectedWith(Error);
   })
 
-  it('can find some free ports', async () => {
+  it('searches for one port by default', async () => {
+    const ports = await findFreePorts();
+    assert.lengthOf(ports, 1);
+    assert(await isFree(ports[0]));
+  });
 
-    for (let i = 0; i < 10; i++) {
+  it('can find a few ports when requested', async () => {
+    const ports = await findFreePorts(3);
+    assert(isUnique(ports));
+  });
 
-      const ports = await findFreePorts(PORT_COUNT);
-
-      expect(ports).to.have.lengthOf(PORT_COUNT);
-        
-      const set = new Set();
-      for (const port of ports) {
-        if (set.has(port)) {
-          assert.fail('Duplicate port found in result set.')
-        } else {
-          set.add(port);
-        }
-      }
-
-      for (const port of ports) {
-        expect(isFree(port)).to.eventually.be.true;
-      }
-
-    }
-
+  it('can find a large amount of unique free ports', async () => {
+    const ports = await findFreePorts(PORT_COUNT);
+    assert.lengthOf(ports, PORT_COUNT);
+    assert(isUnique(ports));
   });
 
 });
