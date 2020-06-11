@@ -1,6 +1,8 @@
 
 node_modules/
 
+*.tgz
+
 # ignore intermediate files built by TypeScript
 /lib/
 
@@ -10,3 +12,4 @@ node_modules/
 
 # exceptions to the previous rule
 !webpack.config.js
+
