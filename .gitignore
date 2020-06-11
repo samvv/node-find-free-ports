@@ -1,6 +1,9 @@
 
 node_modules/
 
+# ignore intermediate files built by TypeScript
+/lib/
+
 # ignore all JavaScript files by default
 *.js
 *.js.map
