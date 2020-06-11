@@ -5,13 +5,13 @@ const MIN_PORT = 1025;
 const MAX_PORT = 65535;
 const DEFAULT_JOB_COUNT = 10;
 
-interface FindFreePortsOptions {
+export interface FindFreePortsOptions {
   startPort?: number;
   endPort?: number;
   jobCount?: number;
 }
 
-async function findFreePorts(count = 1, opts: FindFreePortsOptions = {}): Promise<number[]> {
+export async function findFreePorts(count = 1, opts: FindFreePortsOptions = {}): Promise<number[]> {
 
   const startPort = opts.startPort ?? MIN_PORT;
   const endPort = opts.endPort ?? MAX_PORT;
@@ -54,5 +54,5 @@ async function findFreePorts(count = 1, opts: FindFreePortsOptions = {}): Promis
 
 }
 
-export = findFreePorts;
+export default findFreePorts;
 

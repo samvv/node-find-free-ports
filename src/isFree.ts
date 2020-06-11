@@ -1,7 +1,7 @@
 
 import * as net from "net"
 
-function isFree(port: number): Promise<boolean> {
+export function isFree(port: number): Promise<boolean> {
   return new Promise((accept, reject) => {
     const sock = net.createConnection(port);
     sock.once('connect', () => { sock.end() });
@@ -17,5 +17,5 @@ function isFree(port: number): Promise<boolean> {
   });
 }
 
-export = isFree;
+export default isFree;
 

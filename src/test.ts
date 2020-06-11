@@ -4,7 +4,7 @@ import * as net from "net"
 import * as chai from "chai"
 import chaiAsPromised from "chai-as-promised"
 
-import findFreePorts from './index';
+import findFreePorts from './findFreePorts';
 import isFree from "./isFree"
 
 chai.use(chaiAsPromised);
