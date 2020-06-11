@@ -6,7 +6,7 @@
   "scripts": {
     "prepare": "webpack --config webpack.config.js",
     "watch": "webpack --watch --config webpack.config.js",
-    "test": "mocha --timeout 30000"
+    "test": "mocha --unhandled-rejections=strict --require source-map-support/register --timeout 30000"
   },
   "repository": {
     "type": "git",
@@ -33,6 +33,7 @@
     "babel-loader": "^8.1.0",
     "chai": "^4.2.0",
     "mocha": "^8.0.1",
+    "source-map-support": "^0.5.19",
     "ts-loader": "^7.0.5",
     "typescript": "^3.9.5"
   },
