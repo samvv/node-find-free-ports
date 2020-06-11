@@ -4,8 +4,16 @@ on the local system. Unlike most other "find-free-port" utilities, this library
 allows scanning for multiple free ports at once, making sure that there are no
 doubles in the result.
 
+✔️ TypeScript support
+✔️ No dependencies
+✔️ Should work on all major NodeJS versions
+✔️ Now automatically tested for mistakes
+
 This library has been benchmarked and parallelises the port checks using a
-customisable number of workers for optimal performance.
+customisable number of workers for optimal performance. The alogithm does
+**not** create a new anonymous socket for each port, but instead iterates in
+parallell over the port number. This is both faster and less
+resource-intensive.
 
 🔍 Found an issue? Please let me know in the [issue tracker][1] and we'll get
 it fixed ASAP.
@@ -18,33 +26,25 @@ npm i find-free-ports
 
 ## Usage
 
+Import the library:
+
+```js
+import findFreePorts from "find-free-ports"
+```
+
 ```js
 const findFreePorts = require('find-free-ports');
+```
 
-async function init() {
+Next, call the main function with the amount of free ports you need:
+
+```js
+async function startMultipleServers() {
   const [a, b, c, d] = await findFreePorts(4);
   // now do something interesting with the new ports ...
 }
 ```
 
-## Development
-
-We use [TypeScript](https://www.typescriptlang.org/) to check for human mistakes.
-
-```
-tsc --watch
-```
-
-You can run the tests with the following command:
-
-```
-npm test
-```
-
-⚠️ The tests may use a lot of resources so make sure your computer is up for the
-task. Also, due to race conditios with other applications that cannot be
-avoided, the tests may falsly fail or succeed in rare cases. Be sure to
-double-check any changes you make.
 
 ## Similar Packages
 
