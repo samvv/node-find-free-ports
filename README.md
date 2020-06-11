@@ -1,18 +1,22 @@
+[![Build Status](https://travis-ci.org/samvv/node-find-free-ports.svg?branch=master)](https://travis-ci.org/samvv/node-find-free-ports)
 
 This is a very small package that allows developers to find free ports
 on the local system. Unlike most other "find-free-port" utilities, this library
 allows scanning for multiple free ports at once, making sure that there are no
 doubles in the result.
 
-✔️ TypeScript support
+✔️ TypeScript support 
+
 ✔️ No dependencies
+
 ✔️ Should work on all major NodeJS versions
+
 ✔️ Now automatically tested for mistakes
 
 This library has been benchmarked and parallelises the port checks using a
 customisable number of workers for optimal performance. The alogithm does
 **not** create a new anonymous socket for each port, but instead iterates in
-parallell over the port number. This is both faster and less
+parallell over the system's port numbern. This is both faster and less
 resource-intensive.
 
 🔍 Found an issue? Please let me know in the [issue tracker][1] and we'll get
@@ -31,7 +35,7 @@ Import the library:
 ```js
 import findFreePorts from "find-free-ports"
 ```
-
+or
 ```js
 const findFreePorts = require('find-free-ports');
 ```
