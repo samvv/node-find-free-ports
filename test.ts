@@ -72,6 +72,18 @@ describe('findFreePorts()', () => {
     assert(isUnique(ports));
   });
 
+  it('can run with only one job specified', async () => {
+    const ports = await findFreePorts(PORT_COUNT, { jobCount: 1 });
+    assert.lengthOf(ports, PORT_COUNT);
+    assert(isUnique(ports));
+  });
+
+  it('can run with exactly two jobs', async () => {
+    const ports = await findFreePorts(PORT_COUNT, { jobCount: 2 });
+    assert.lengthOf(ports, PORT_COUNT);
+    assert(isUnique(ports));
+  });
+
 });
 
 
