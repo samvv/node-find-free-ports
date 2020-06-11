@@ -3,6 +3,7 @@ node_modules/
 
 # ignore all JavaScript files by default
 *.js
+*.js.map
 
 # exceptions to the previous rule
 !webpack.config.js
