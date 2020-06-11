@@ -16,7 +16,7 @@ doubles in the result.
 This library has been benchmarked and parallelises the port checks using a
 customisable number of workers for optimal performance. The alogithm does
 **not** create a new anonymous socket for each port, but instead iterates in
-parallell over the system's port numbern. This is both faster and less
+parallell over the system's port numbers. This is both faster and less
 resource-intensive.
 
 🔍 Found an issue? Please let me know in the [issue tracker][1] and we'll get
