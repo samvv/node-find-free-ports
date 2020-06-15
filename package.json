@@ -1,6 +1,6 @@
 {
   "name": "find-free-ports",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Find multiple free ports on localhost",
   "main": "index.js",
   "scripts": {
