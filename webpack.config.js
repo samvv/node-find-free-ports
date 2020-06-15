@@ -4,9 +4,12 @@ const path = require("path");
 module.exports = [{
   target: 'node',
   mode: 'production',
-  entry: './src/index.ts',
+  entry: {
+    isFree: './src/isFree.ts',
+    index: './src/index.ts',
+  },
   output: {
-    filename: 'index.js',
+    filename: '[name].js',
     path: path.resolve(__dirname),
     libraryTarget: 'commonjs2',
     libraryExport: 'default',
