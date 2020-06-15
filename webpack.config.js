@@ -6,7 +6,7 @@ module.exports = [{
   mode: 'production',
   entry: {
     isFree: './src/isFree.ts',
-    index: './src/index.ts',
+    index: './src/findFreePorts.ts',
   },
   output: {
     filename: '[name].js',
