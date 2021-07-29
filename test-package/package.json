@@ -7,7 +7,10 @@
   "scripts": {
     "test": "node ."
   },
-  "keywords": [],
-  "author": "",
+  "dependencies": {
+    "find-free-ports": "^3.0.0"
+  },
+  "keywords": ["example", "test", "networking", "cli"],
+  "author": "Sam Vervaeck",
   "license": "MIT"
 }

@@ -1,11 +1,11 @@
 {
   "name": "find-free-ports",
-  "version": "2.0.3",
+  "version": "3.0.0",
   "description": "Find multiple free ports on localhost",
   "main": "index.js",
   "scripts": {
     "prepare": "babel --extensions '.ts' index.ts tests.ts --out-dir .",
-    "watch": "concurrently 'ava --watch' 'babel --watch --extensions .ts index.ts tests.ts --out-dir .'",
+    "watch": "npm run prepare && concurrently 'ava --watch' 'babel --watch --extensions .ts index.ts tests.ts --out-dir .'",
     "test": "ava"
   },
   "repository": {
@@ -25,7 +25,6 @@
   },
   "homepage": "https://github.com/samvv/node-find-free-ports#readme",
   "devDependencies": {
-    "@ava/babel": "^2.0.0",
     "@babel/cli": "^7.14.8",
     "@babel/core": "^7.14.8",
     "@babel/preset-env": "^7.14.8",
