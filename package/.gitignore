@@ -3,13 +3,8 @@ node_modules/
 
 *.tgz
 
-# ignore intermediate files built by TypeScript
-/lib/
-
-# ignore all JavaScript files by default
 *.js
 *.js.map
-
-# exceptions to the previous rule
-!webpack.config.js
+*.d.ts
+*.d.ts.map
 
