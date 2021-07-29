@@ -54,7 +54,7 @@ async function startMultipleServers() {
 ### findFreePorts(count?, opts?)
 
 Search for the specified amount of free ports on the local machine. If `count`
-is left unspecified, default to `1`. `opts` may be a dictionary containing one
+is left unspecified, it defaults to `1`. `opts` may be a dictionary containing one
 of the following keys:
 
  - `isFree`: custom function that is used to check whether the given port is free
