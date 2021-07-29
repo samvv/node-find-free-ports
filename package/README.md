@@ -53,6 +53,10 @@ async function startMultipleServers() {
 
 ### findFreePorts(count?, opts?)
 
+```js
+import { findFreePorts } from "find-free-ports"
+```
+
 Search for the specified amount of free ports on the local machine. If `count`
 is left unspecified, it defaults to `1`. `opts` may be a dictionary containing one
 of the following keys:
@@ -66,12 +70,20 @@ of the following keys:
 
 ### isFreePort(port)
 
+```js
+import { isFreePort } from "find-free-ports"
+```
+
 Check whether the given port is free by trying to set up a socket.
 
 This function returns a promise containing either `true` or `false` depending
 on whether the port was available.
 
 ### FindFreePortsOptions
+
+```js
+import { FindFreePortsOptions } from "find-free-ports"
+```
 
 A TypeScript interface that lists all valid options that may be passed as the
 `opts` parameter to `findFreePorts()`.
