@@ -3,7 +3,7 @@ import test from "ava"
 
 import net from "net"
 
-import { findFreePorts, isFree } from './index';
+import { findFreePorts, isFreePort } from './index';
 
 const PORT_COUNT = 1000;
 
@@ -48,7 +48,7 @@ test('findFreePorts() crashes properly when there are not enough free ports with
 test('searches for one port by default', async (t) => {
   const ports = await findFreePorts();
   t.assert(ports.length === 1);
-  t.truthy(await isFree(ports[0]));
+  t.truthy(await isFreePort(ports[0]));
 });
 
 test('can find a few ports when requested', async (t) => {
@@ -79,7 +79,7 @@ test('isFree() detects when a port is in use', async (t) => {
   t.plan(1);
   const server = net.createServer();
   const port = await listen(server, undefined);
-  t.falsy(await isFree(port));
+  t.falsy(await isFreePort(port));
   await closeServer(server);
 });
 
@@ -88,6 +88,6 @@ test('isFree() detects when a port is free', async (t) => {
   const server = net.createServer();
   const port = await listen(server);
   await closeServer(server);
-  t.truthy(await isFree(port));
+  t.truthy(await isFreePort(port));
 });
 

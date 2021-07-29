@@ -10,13 +10,21 @@ export interface FindFreePortsOptions {
   startPort?: number;
   endPort?: number;
   jobCount?: number;
+  isFree?: (port: number) => Promise<boolean>;
 }
 
-export async function findFreePorts(count = 1, opts: FindFreePortsOptions = {}): Promise<number[]> {
+function clamp(value: number, min: number, max: number): number {
+  if (value < min) return min;
+  if (value > max) return max;
+  return value;
+}
 
-  const startPort = opts.startPort ?? MIN_PORT;
-  const endPort = opts.endPort ?? MAX_PORT;
-  const jobCount = Math.min(count, opts.jobCount ?? DEFAULT_JOB_COUNT);
+export async function findFreePorts(count = 1, {
+  endPort = MAX_PORT,
+  startPort = MIN_PORT,
+  jobCount = DEFAULT_JOB_COUNT,
+  isFree = isFreePort
+}: FindFreePortsOptions = {}): Promise<number[]> {
 
   if (count > (endPort - startPort)) {
     throw new Error(`Could not find free ports: the range of allowed ports is not large enough for the requested amount of ports to find.`);
@@ -45,6 +53,7 @@ export async function findFreePorts(count = 1, opts: FindFreePortsOptions = {}):
         break;
       }
       if (await isFree(port)) {
+
         if (ports.length >= count) {
           break;
         }
@@ -55,7 +64,7 @@ export async function findFreePorts(count = 1, opts: FindFreePortsOptions = {}):
 
 }
 
-export function isFree(port: number): Promise<boolean> {
+export function isFreePort(port: number): Promise<boolean> {
   return new Promise((accept, reject) => {
     const sock = net.createConnection(port);
     sock.once('connect', () => { sock.end(); accept(false); });

@@ -49,6 +49,32 @@ async function startMultipleServers() {
 }
 ```
 
+## API
+
+### findFreePorts(count?, opts?)
+
+Search for the specified amount of free ports on the local machine. If `count`
+is left unspecified, default to `1`. `opts` may be a dictionary containing one
+of the following keys:
+
+ - `isFree`: custom function that is used to check whether the given port is free
+ - `startPort`: start scanning for free ports starting from this port number.
+     Defaults to `1025`.
+ - `endPort`: prevent the scanner from exceeding this port number. Defaults to
+    `65535`.
+ - `jobCount`: how much workers that may at most be looking for free ports
+
+### isFreePort(port)
+
+Check whether the given port is free by trying to set up a socket.
+
+This function returns a promise containing either `true` or `false` depending
+on whether the port was available.
+
+### FindFreePortsOptions
+
+A TypeScript interface that lists all valid options that may be passed as the
+`opts` parameter to `findFreePorts()`.
 
 ## Similar Packages
 
