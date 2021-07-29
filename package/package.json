@@ -4,8 +4,8 @@
   "description": "Find multiple free ports on localhost",
   "main": "index.js",
   "scripts": {
-    "prepare": "babel --extensions '.ts' index.ts tests.ts --out-dir .",
-    "watch": "npm run prepare && concurrently 'ava --watch' 'babel --watch --extensions .ts index.ts tests.ts --out-dir .'",
+    "prepare": "tsc && babel --extensions '.ts' index.ts tests.ts --out-dir . --source-maps",
+    "watch": "concurrently 'ava --watch' 'babel --watch --extensions .ts index.ts tests.ts --out-dir .'",
     "test": "ava"
   },
   "repository": {
@@ -29,7 +29,6 @@
     "@babel/core": "^7.14.8",
     "@babel/preset-env": "^7.14.8",
     "@babel/preset-typescript": "^7.14.5",
-    "@babel/register": "^7.14.5",
     "@types/node": "^16.4.7",
     "ava": "^3.15.0",
     "concurrently": "^6.2.0",
