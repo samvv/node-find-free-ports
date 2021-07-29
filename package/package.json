@@ -1,0 +1,39 @@
+{
+  "name": "find-free-ports",
+  "version": "2.0.3",
+  "description": "Find multiple free ports on localhost",
+  "main": "index.js",
+  "scripts": {
+    "prepare": "babel --extensions '.ts' index.ts tests.ts --out-dir .",
+    "watch": "concurrently 'ava --watch' 'babel --watch --extensions .ts index.ts tests.ts --out-dir .'",
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samvv/node-find-free-ports.git"
+  },
+  "keywords": [
+    "node",
+    "port",
+    "server",
+    "scanner"
+  ],
+  "author": "Sam Vervaeck",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/samvv/node-find-free-ports/issues"
+  },
+  "homepage": "https://github.com/samvv/node-find-free-ports#readme",
+  "devDependencies": {
+    "@ava/babel": "^2.0.0",
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.14.8",
+    "@babel/preset-env": "^7.14.8",
+    "@babel/preset-typescript": "^7.14.5",
+    "@babel/register": "^7.14.5",
+    "@types/node": "^16.4.7",
+    "ava": "^3.15.0",
+    "concurrently": "^6.2.0",
+    "typescript": "^4.3.5"
+  }
+}

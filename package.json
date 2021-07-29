@@ -1,45 +1,14 @@
 {
-  "name": "find-free-ports",
-  "version": "2.0.3",
-  "description": "Find multiple free ports on localhost",
-  "main": "index.js",
-  "scripts": {
-    "prepare": "webpack --config webpack.config.js",
-    "watch": "webpack --watch --config webpack.config.js",
-    "test": "node test.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/samvv/node-find-free-ports.git"
-  },
-  "keywords": [
-    "node",
-    "port",
-    "server",
-    "scanner"
+  "name": "node-find-free-ports-workspace",
+  "private": true,
+  "workspaces": [
+    "package",
+    "test-package"
   ],
-  "author": "Sam Vervaeck",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/samvv/node-find-free-ports/issues"
+  "scripts": {
+    "test": "concurrently 'cd package && npm test' 'cd test-package && npm test'"
   },
-  "homepage": "https://github.com/samvv/node-find-free-ports#readme",
   "devDependencies": {
-    "@babel/core": "^7.10.2",
-    "@babel/preset-env": "^7.10.2",
-    "@types/chai": "^4.2.11",
-    "@types/chai-as-promised": "^7.1.2",
-    "@types/mocha": "^7.0.2",
-    "@types/node": "^14.0.13",
-    "@types/tape": "^4.13.0",
-    "babel-loader": "^8.1.0",
-    "chai": "^4.2.0",
-    "chai-as-promised": "^7.1.1",
-    "source-map-support": "^0.5.19",
-    "tape": "^5.0.1",
-    "ts-loader": "^7.0.5",
-    "typescript": "^3.9.5",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11"
+    "concurrently": "^6.2.0"
   }
 }

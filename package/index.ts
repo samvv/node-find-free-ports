@@ -1,9 +1,10 @@
 
-import isFree from "./isFree"
+import os from "os"
+import net from "net"
 
 const MIN_PORT = 1025;
 const MAX_PORT = 65535;
-const DEFAULT_JOB_COUNT = 10;
+const DEFAULT_JOB_COUNT = os.cpus().length;
 
 export interface FindFreePortsOptions {
   startPort?: number;
@@ -52,6 +53,21 @@ export async function findFreePorts(count = 1, opts: FindFreePortsOptions = {}):
     }
   }
 
+}
+
+export function isFree(port: number): Promise<boolean> {
+  return new Promise((accept, reject) => {
+    const sock = net.createConnection(port);
+    sock.once('connect', () => { sock.end(); accept(false); });
+    sock.once('error', (e: NodeJS.ErrnoException) => {
+      sock.destroy();
+      if (e.code === 'ECONNREFUSED') {
+        accept(true)
+      } else {
+        reject(e);
+      }
+    });
+  });
 }
 
 export default findFreePorts;
