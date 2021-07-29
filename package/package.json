@@ -15,8 +15,10 @@
   "keywords": [
     "node",
     "port",
+    "networking",
     "server",
-    "scanner"
+    "client",
+    "library"
   ],
   "author": "Sam Vervaeck",
   "license": "MIT",
