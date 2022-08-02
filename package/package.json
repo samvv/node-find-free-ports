@@ -3,6 +3,7 @@
   "version": "3.0.0",
   "description": "Find multiple free ports on localhost",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "prepare": "tsc && babel --extensions '.ts' index.ts tests.ts --out-dir . --source-maps",
     "watch": "concurrently 'ava tests.js --watch' 'babel --watch --extensions .ts index.ts tests.ts --out-dir .'",
