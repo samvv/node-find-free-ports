@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/samvv/node-find-free-ports.svg?branch=master)](https://travis-ci.org/samvv/node-find-free-ports)
 
 This is a very small package that allows developers to find free ports
 on the local system. Unlike most other "find-free-port" utilities, this library
