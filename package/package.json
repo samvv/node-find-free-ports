@@ -33,6 +33,7 @@
     "@babel/preset-typescript": "^7.21.4",
     "@types/node": "^18.15.11",
     "ava": "^5.2.0",
+    "babel-plugin-add-module-exports": "^1.0.4",
     "concurrently": "^8.0.1",
     "typescript": "^5.0.4"
   }
