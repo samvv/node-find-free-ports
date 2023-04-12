@@ -9,6 +9,6 @@
     "test": "concurrently 'cd package && npm test' 'cd test-package && npm test'"
   },
   "devDependencies": {
-    "concurrently": "^6.2.0"
+    "concurrently": "^8.0.1"
   }
 }
