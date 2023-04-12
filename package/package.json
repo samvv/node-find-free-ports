@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "prepare": "tsc && babel --extensions '.ts' index.ts tests.ts --out-dir . --source-maps",
-    "watch": "concurrently 'ava --watch' 'babel --watch --extensions .ts index.ts tests.ts --out-dir .'",
-    "test": "ava"
+    "watch": "concurrently 'ava tests.js --watch' 'babel --watch --extensions .ts index.ts tests.ts --out-dir .'",
+    "test": "ava tests.js"
   },
   "repository": {
     "type": "git",
