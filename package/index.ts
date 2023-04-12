@@ -81,3 +81,8 @@ export function isFreePort(port: number): Promise<boolean> {
 
 export default findFreePorts;
 
+if (typeof(module.exports) !== 'undefined') {
+  module.exports = findFreePorts;
+  findFreePorts.findFreePorts = findFreePorts;
+  findFreePorts.isFreePort = isFreePort;
+}
