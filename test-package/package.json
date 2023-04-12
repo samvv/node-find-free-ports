@@ -5,7 +5,7 @@
   "description": "A small package to check that we can import our package",
   "main": "index.js",
   "scripts": {
-    "test": "node ."
+    "test": "tsc && node index.js && node commonjs.js && node esm.mjs"
   },
   "dependencies": {
     "find-free-ports": "^3.0.0"
