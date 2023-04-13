@@ -8,7 +8,7 @@
     "test": "tsc && node index.js && node commonjs.js && node esm.mjs"
   },
   "dependencies": {
-    "find-free-ports": "^3.1.0"
+    "find-free-ports": "^3.1.1"
   },
   "keywords": ["example", "test", "networking", "cli"],
   "author": "Sam Vervaeck",
